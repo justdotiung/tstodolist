@@ -12,13 +12,11 @@ export class BaseComponent {
     parent.appendChild(this.element);
   }
 
-  addChild(child: BaseComponent): void {
-    this.element.appendChild(child.element);
-  }
-}
-
-export class PageComponent extends BaseComponent {
-  constructor() {
-    super(`<div></div>`);
+  removeFrom(parent: HTMLElement): void {
+    if (parent !== this.element.parentElement) {
+      throw new Error('not same parent node');
+    } else {
+      parent.removeChild(this.element);
+    }
   }
 }

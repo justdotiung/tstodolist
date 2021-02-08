@@ -17,9 +17,9 @@ var HeaderList = /** @class */ (function (_super) {
     function HeaderList(item) {
         var _this = _super.call(this, "<ul class=\"header__list\"></ul>") || this;
         if (!Array.isArray(item))
-            _this.addChild(item);
+            item.attachTo(_this.element);
         else
-            item.forEach(function (v) { return _this.addChild(v); });
+            item.forEach(function (v) { return v.attachTo(_this.element); });
         return _this;
     }
     return HeaderList;

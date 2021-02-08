@@ -7,6 +7,6 @@ export class Header extends BaseComponent {
 						<h1 class="header__title">Todo List</h1>
 				</header>`);
 
-    list && this.addChild(list);
+    list && list.attachTo(this.element);
   }
 }

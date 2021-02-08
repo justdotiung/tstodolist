@@ -59,8 +59,109 @@ header {
   transition: 500ms ease;
 }
 
+/* ============= header popup ================= */
 .head__popup {
+  width: 100%;
+  height: 100%;
+  background-color: #606b6467;
   position: absolute;
   z-index: 1;
   top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.head__popup__content {
+  width: 30rem;
+  height: 4rem;
+  border-bottom: 3px solid #92e0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.head__popup__input {
+  outline: none;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  width: 25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-right: 0.5rem;
+}
+
+.head__popup__input::placeholder {
+  opacity: 0.5;
+}
+
+.head__popup__add {
+  outline: none;
+  border: none;
+  background-color: #5dd1ff;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border-radius: 5px;
+  margin-right: 0.3rem;
+  font-weight: bolder;
+  color: white;
+  font-size: 15px;
+}
+
+.head__popup__close {
+  font-weight: bolder;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  background-color: #5dd1ff;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border-radius: 5px;
+  margin-right: 0.3rem;
+}
+
+.head__popup__add:hover,
+.head__popup__close:hover {
+  border: 2px solid #47beec;
+  border-radius: 5px;
+}
+
+/* ============= content ================= */
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.content__box {
+  width: 40rem;
+  height: 10rem;
+}
+
+.content__box__title {
+  border: 2px solid teal;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  padding: 1rem;
+}
+
+.content__box__body {
+  background-color: teal;
+}
+
+.content__box__body > ul,
+.content__box__body > ul > li {
+  margin: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .content__box {
+    width: 20rem;
+  }
 }

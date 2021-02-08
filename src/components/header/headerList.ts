@@ -4,7 +4,7 @@ import { ListItem } from './headerItem.js';
 export class HeaderList extends BaseComponent {
   constructor(item: ListItem | Array<ListItem>) {
     super(`<ul class="header__list"></ul>`);
-    if (!Array.isArray(item)) this.addChild(item);
-    else item.forEach((v) => this.addChild(v));
+    if (!Array.isArray(item)) item.attachTo(this.element);
+    else item.forEach((v) => v.attachTo(this.element));
   }
 }

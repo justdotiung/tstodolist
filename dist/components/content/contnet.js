@@ -15,8 +15,13 @@ import { BaseComponent } from '../../pageComponent.js';
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     function Content() {
-        return _super.call(this, "<section>\n              <div>Todo list section</div>\n          </section>") || this;
+        var _this = _super.call(this, "<section>\n              <div class=\"content\">\n              </div>\n          </section>") || this;
+        _this.content = _this.element.querySelector('.content');
+        return _this;
     }
+    Content.prototype.addChild = function (child) {
+        child.attachTo(this.content);
+    };
     return Content;
 }(BaseComponent));
 export { Content };
