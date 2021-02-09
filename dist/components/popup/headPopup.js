@@ -15,7 +15,7 @@ import { BaseComponent } from '../../pageComponent.js';
 var HeadPopup = /** @class */ (function (_super) {
     __extends(HeadPopup, _super);
     function HeadPopup() {
-        var _this = _super.call(this, "<div class=\"head__popup\">\n            <div>\n              <div class=\"head__popup__content\">\n              <input class=\"head__popup__input\" type=\"text\" placeholder=\"write some todo...\"  >\n              <button class=\"head__popup__add\">+</button>\n              <button class=\"head__popup__close\">x</button>\n              </div>\n            </div>\n          </div>") || this;
+        var _this = _super.call(this, "<div class=\"head__popup\">\n            <div>\n              <div class=\"head__popup__content\">\n              <input class=\"head__popup__input\" type=\"text\" placeholder=\"write some todo...\"  >\n              <button class=\"head__popup__add\">+</button>\n              <button class=\"head__popup__close\">x</button>\n              </div>\n              <span class=\"popup__error\"></span>\n            </div>\n          </div>") || this;
         _this.input = _this.element.querySelector('.head__popup__input');
         _this.input.onfocus = function () {
             _this.input.placeholder = '';
@@ -24,9 +24,18 @@ var HeadPopup = /** @class */ (function (_super) {
             _this.input.placeholder = 'write some todo...';
         };
         var addBtn = _this.element.querySelector('.head__popup__add');
+        var errorSpan = _this.element.querySelector('.popup__error');
         addBtn.onclick = function () {
-            _this.removeFrom(_this.element.parentElement);
-            _this.onClick && _this.onClick();
+            try {
+                _this.onClick && _this.onClick();
+                _this.removeFrom(_this.element.parentElement);
+                _this.input.value = '';
+                errorSpan.classList.remove('error');
+            }
+            catch (e) {
+                errorSpan.classList.add('error');
+                errorSpan.textContent = e.message;
+            }
         };
         var closeBtn = _this.element.querySelector('.head__popup__close');
         closeBtn.onclick = function () {

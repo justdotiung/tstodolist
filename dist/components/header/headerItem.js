@@ -27,6 +27,13 @@ var ListItem = /** @class */ (function (_super) {
     ListItem.prototype.setClickHandler = function (handler) {
         this.onClick = handler;
     };
+    Object.defineProperty(ListItem.prototype, "title", {
+        get: function () {
+            return this.text;
+        },
+        enumerable: false,
+        configurable: true
+    });
     return ListItem;
 }(BaseComponent));
 export { ListItem };

@@ -1,3 +1,4 @@
+import { ContentItem } from './components/content/contentItem.js';
 import { ContentList } from './components/content/contentList.js';
 import { Content } from './components/content/contnet.js';
 import { Footer } from './components/footer/footer.js';
@@ -15,26 +16,21 @@ var App = /** @class */ (function () {
         header.attachTo(target);
         content.attachTo(target);
         footer.attachTo(target);
-        headItems[0].setClickHandler(function (e) {
+        headItems.forEach(function (headListItem) {
+            var bodyList = new ContentList(headListItem.title);
             var popup = new HeadPopup();
-            popup.attachTo(target);
-            popup.setOnClick(function () {
-                content.addChild(new ContentList('Today'));
-                console.log(popup.value);
+            headListItem.setClickHandler(function () {
+                popup.attachTo(target);
             });
-        });
-        headItems[1].setClickHandler(function (e) {
-            var popup = new HeadPopup();
-            popup.attachTo(target);
             popup.setOnClick(function () {
-                console.log(popup.value);
-            });
-        });
-        headItems[2].setClickHandler(function (e) {
-            var popup = new HeadPopup();
-            popup.attachTo(target);
-            popup.setOnClick(function () {
-                console.log(popup.value);
+                if (!popup.value)
+                    throw new Error('입력내용이없습니다.');
+                if (!bodyList.ui) {
+                    content.addChild(bodyList);
+                    bodyList.ui = true;
+                }
+                var newItem = new ContentItem(popup.value);
+                bodyList.addChild(newItem);
             });
         });
     }

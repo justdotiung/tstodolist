@@ -15,7 +15,7 @@ import { BaseComponent } from '../../pageComponent.js';
 var Content = /** @class */ (function (_super) {
     __extends(Content, _super);
     function Content() {
-        var _this = _super.call(this, "<section>\n              <div class=\"content\">\n              </div>\n          </section>") || this;
+        var _this = _super.call(this, "<section class=\"content__section\">\n              <div class=\"content\">\n              </div>\n          </section>") || this;
         _this.content = _this.element.querySelector('.content');
         return _this;
     }

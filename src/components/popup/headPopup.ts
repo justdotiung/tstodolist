@@ -13,6 +13,7 @@ export class HeadPopup extends BaseComponent {
               <button class="head__popup__add">+</button>
               <button class="head__popup__close">x</button>
               </div>
+              <span class="popup__error"></span>
             </div>
           </div>`);
 
@@ -25,9 +26,18 @@ export class HeadPopup extends BaseComponent {
     };
 
     const addBtn = this.element.querySelector('.head__popup__add') as HTMLButtonElement;
+    const errorSpan = this.element.querySelector('.popup__error') as HTMLElement;
+
     addBtn.onclick = () => {
-      this.removeFrom(this.element.parentElement as HTMLElement);
-      this.onClick && this.onClick();
+      try {
+        this.onClick && this.onClick();
+        this.removeFrom(this.element.parentElement as HTMLElement);
+        this.input.value = '';
+        errorSpan.classList.remove('error');
+      } catch (e) {
+        errorSpan.classList.add('error');
+        errorSpan.textContent = e.message;
+      }
     };
 
     const closeBtn = this.element.querySelector('.head__popup__close') as HTMLButtonElement;

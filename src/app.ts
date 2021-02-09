@@ -1,3 +1,4 @@
+import { ContentItem } from './components/content/contentItem.js';
 import { ContentList } from './components/content/contentList.js';
 import { Content } from './components/content/contnet.js';
 import { Footer } from './components/footer/footer.js';
@@ -17,28 +18,21 @@ class App {
     content.attachTo(target);
     footer.attachTo(target);
 
-    headItems[0].setClickHandler((e) => {
+    headItems.forEach((headListItem) => {
+      const bodyList = new ContentList(headListItem.title);
       const popup = new HeadPopup();
-      popup.attachTo(target);
-      popup.setOnClick(() => {
-        content.addChild(new ContentList('Today'));
-        console.log(popup.value);
+      headListItem.setClickHandler(() => {
+        popup.attachTo(target);
       });
-    });
-
-    headItems[1].setClickHandler((e) => {
-      const popup = new HeadPopup();
-      popup.attachTo(target);
       popup.setOnClick(() => {
-        console.log(popup.value);
-      });
-    });
+        if (!popup.value) throw new Error('입력내용이없습니다.');
 
-    headItems[2].setClickHandler((e) => {
-      const popup = new HeadPopup();
-      popup.attachTo(target);
-      popup.setOnClick(() => {
-        console.log(popup.value);
+        if (!bodyList.ui) {
+          content.addChild(bodyList);
+          bodyList.ui = true;
+        }
+        const newItem = new ContentItem(popup.value);
+        bodyList.addChild(newItem);
       });
     });
   }

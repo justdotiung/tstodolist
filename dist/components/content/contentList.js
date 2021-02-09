@@ -15,11 +15,26 @@ import { BaseComponent } from './../../pageComponent.js';
 var ContentList = /** @class */ (function (_super) {
     __extends(ContentList, _super);
     function ContentList(title) {
-        var _this = _super.call(this, "<div class=\"content__box\">\n            <div class=\"content__box__title\"><span></span></div>\n            <div class=\"content__box__body\">\n              <ul>\n                <li><span>today1</span></li>\n                <li><span>today2</span></li>\n                <li><span>today3</span></li>\n              </ul>\n            </div>\n          </div>\n    ") || this;
+        var _this = _super.call(this, "<div class=\"content__box\">\n            <div class=\"content__box__title\"><span></span></div>\n            <div class=\"content__box__body\">\n              <ul class=\"content__box__ul\"></ul>\n            </div>\n          </div>\n    ") || this;
+        _this._ui = false;
         var titleP = _this.element.querySelector('span');
         titleP.textContent = title;
         return _this;
     }
+    Object.defineProperty(ContentList.prototype, "ui", {
+        get: function () {
+            return this._ui;
+        },
+        set: function (b) {
+            this._ui = b;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ContentList.prototype.addChild = function (child) {
+        var ul = this.element.querySelector('.content__box__ul');
+        child.attachTo(ul);
+    };
     return ContentList;
 }(BaseComponent));
 export { ContentList };

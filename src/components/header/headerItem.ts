@@ -16,6 +16,9 @@ export class ListItem extends BaseComponent {
     this.onClick = handler;
   }
 
+  get title(): string {
+    return this.text;
+  }
   // onClickHandler(e: Event): void {
   //   this.onClick && this.onClick(e);
   // }

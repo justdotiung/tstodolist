@@ -3,7 +3,7 @@ import { BaseComponent } from '../../pageComponent.js';
 export class Content extends BaseComponent {
   private content: HTMLElement;
   constructor() {
-    super(`<section>
+    super(`<section class="content__section">
               <div class="content">
               </div>
           </section>`);
