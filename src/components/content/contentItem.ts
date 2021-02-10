@@ -1,7 +1,7 @@
 import { BaseComponent } from './../../pageComponent.js';
 export class ContentItem extends BaseComponent {
   constructor(content: string) {
-    super(`<li><span></span></li>`);
+    super(`<div class="content__item"><span></span></div>`);
 
     const span = this.element.querySelector('span') as HTMLSpanElement;
 

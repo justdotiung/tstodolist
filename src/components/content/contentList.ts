@@ -5,7 +5,7 @@ export class ContentList extends BaseComponent {
     super(`<div class="content__box">
             <div class="content__box__title"><span></span></div>
             <div class="content__box__body">
-              <ul class="content__box__ul"></ul>
+              <div class="content__box__div"></div>
             </div>
           </div>
     `);
@@ -22,8 +22,8 @@ export class ContentList extends BaseComponent {
     return this._ui;
   }
 
-  addChild(child: BaseComponent) {
-    const ul = this.element.querySelector('.content__box__ul') as HTMLUListElement;
+  addChild(child: BaseComponent): void {
+    const ul = this.element.querySelector('.content__box__div') as HTMLUListElement;
     child.attachTo(ul);
   }
 }

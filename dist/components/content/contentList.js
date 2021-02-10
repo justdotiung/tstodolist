@@ -15,7 +15,7 @@ import { BaseComponent } from './../../pageComponent.js';
 var ContentList = /** @class */ (function (_super) {
     __extends(ContentList, _super);
     function ContentList(title) {
-        var _this = _super.call(this, "<div class=\"content__box\">\n            <div class=\"content__box__title\"><span></span></div>\n            <div class=\"content__box__body\">\n              <ul class=\"content__box__ul\"></ul>\n            </div>\n          </div>\n    ") || this;
+        var _this = _super.call(this, "<div class=\"content__box\">\n            <div class=\"content__box__title\"><span></span></div>\n            <div class=\"content__box__body\">\n              <div class=\"content__box__div\"></div>\n            </div>\n          </div>\n    ") || this;
         _this._ui = false;
         var titleP = _this.element.querySelector('span');
         titleP.textContent = title;
@@ -32,7 +32,7 @@ var ContentList = /** @class */ (function (_super) {
         configurable: true
     });
     ContentList.prototype.addChild = function (child) {
-        var ul = this.element.querySelector('.content__box__ul');
+        var ul = this.element.querySelector('.content__box__div');
         child.attachTo(ul);
     };
     return ContentList;

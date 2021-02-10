@@ -9,29 +9,28 @@ import { HeadPopup } from './components/popup/headPopup.js';
 var App = /** @class */ (function () {
     function App(target) {
         this.target = target;
-        var headItems = [new ListItem('today'), new ListItem('daily'), new ListItem('Weekly')];
+        var headItems = new ListItem('today');
         var header = new Header(new HeaderList(headItems));
         var content = new Content();
         var footer = new Footer();
         header.attachTo(target);
         content.attachTo(target);
         footer.attachTo(target);
-        headItems.forEach(function (headListItem) {
-            var bodyList = new ContentList(headListItem.title);
-            var popup = new HeadPopup();
-            headListItem.setClickHandler(function () {
-                popup.attachTo(target);
-            });
-            popup.setOnClick(function () {
-                if (!popup.value)
-                    throw new Error('입력내용이없습니다.');
-                if (!bodyList.ui) {
-                    content.addChild(bodyList);
-                    bodyList.ui = true;
-                }
-                var newItem = new ContentItem(popup.value);
-                bodyList.addChild(newItem);
-            });
+        var bodyList = new ContentList(headItems.title);
+        var popup = new HeadPopup();
+        headItems.setClickHandler(function () {
+            popup.value = '';
+            popup.attachTo(target);
+        });
+        popup.setOnClick(function () {
+            if (!popup.value)
+                throw new Error('입력내용이없습니다.');
+            if (!bodyList.ui) {
+                content.addChild(bodyList);
+                bodyList.ui = true;
+            }
+            var newItem = new ContentItem(popup.value);
+            bodyList.addChild(newItem);
         });
     }
     return App;

@@ -17,16 +17,17 @@ export class HeadPopup extends BaseComponent {
             </div>
           </div>`);
 
+    const addBtn = this.element.querySelector('.head__popup__add') as HTMLButtonElement;
+    const errorSpan = this.element.querySelector('.popup__error') as HTMLElement;
     this.input = this.element.querySelector('.head__popup__input') as HTMLInputElement;
+
     this.input.onfocus = () => {
+      errorSpan.classList.remove('error');
       this.input.placeholder = '';
     };
     this.input.onblur = () => {
       this.input.placeholder = 'write some todo...';
     };
-
-    const addBtn = this.element.querySelector('.head__popup__add') as HTMLButtonElement;
-    const errorSpan = this.element.querySelector('.popup__error') as HTMLElement;
 
     addBtn.onclick = () => {
       try {
@@ -49,6 +50,10 @@ export class HeadPopup extends BaseComponent {
   get value(): string {
     this.input.value;
     return this.input.value;
+  }
+
+  set value(text: string) {
+    this.input.value = text;
   }
 
   setOnClick(listener: onClickListener): void {

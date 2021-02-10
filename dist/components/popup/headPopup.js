@@ -16,15 +16,16 @@ var HeadPopup = /** @class */ (function (_super) {
     __extends(HeadPopup, _super);
     function HeadPopup() {
         var _this = _super.call(this, "<div class=\"head__popup\">\n            <div>\n              <div class=\"head__popup__content\">\n              <input class=\"head__popup__input\" type=\"text\" placeholder=\"write some todo...\"  >\n              <button class=\"head__popup__add\">+</button>\n              <button class=\"head__popup__close\">x</button>\n              </div>\n              <span class=\"popup__error\"></span>\n            </div>\n          </div>") || this;
+        var addBtn = _this.element.querySelector('.head__popup__add');
+        var errorSpan = _this.element.querySelector('.popup__error');
         _this.input = _this.element.querySelector('.head__popup__input');
         _this.input.onfocus = function () {
+            errorSpan.classList.remove('error');
             _this.input.placeholder = '';
         };
         _this.input.onblur = function () {
             _this.input.placeholder = 'write some todo...';
         };
-        var addBtn = _this.element.querySelector('.head__popup__add');
-        var errorSpan = _this.element.querySelector('.popup__error');
         addBtn.onclick = function () {
             try {
                 _this.onClick && _this.onClick();
@@ -47,6 +48,9 @@ var HeadPopup = /** @class */ (function (_super) {
         get: function () {
             this.input.value;
             return this.input.value;
+        },
+        set: function (text) {
+            this.input.value = text;
         },
         enumerable: false,
         configurable: true

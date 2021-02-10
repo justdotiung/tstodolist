@@ -9,7 +9,7 @@ import { HeadPopup } from './components/popup/headPopup.js';
 
 class App {
   constructor(private target: HTMLElement) {
-    const headItems = [new ListItem('today'), new ListItem('daily'), new ListItem('Weekly')];
+    const headItems = new ListItem('today');
     const header = new Header(new HeaderList(headItems));
     const content = new Content();
     const footer = new Footer();
@@ -18,22 +18,21 @@ class App {
     content.attachTo(target);
     footer.attachTo(target);
 
-    headItems.forEach((headListItem) => {
-      const bodyList = new ContentList(headListItem.title);
-      const popup = new HeadPopup();
-      headListItem.setClickHandler(() => {
-        popup.attachTo(target);
-      });
-      popup.setOnClick(() => {
-        if (!popup.value) throw new Error('입력내용이없습니다.');
+    const bodyList = new ContentList(headItems.title);
+    const popup = new HeadPopup();
+    headItems.setClickHandler(() => {
+      popup.value = '';
+      popup.attachTo(target);
+    });
+    popup.setOnClick(() => {
+      if (!popup.value) throw new Error('입력내용이없습니다.');
 
-        if (!bodyList.ui) {
-          content.addChild(bodyList);
-          bodyList.ui = true;
-        }
-        const newItem = new ContentItem(popup.value);
-        bodyList.addChild(newItem);
-      });
+      if (!bodyList.ui) {
+        content.addChild(bodyList);
+        bodyList.ui = true;
+      }
+      const newItem = new ContentItem(popup.value);
+      bodyList.addChild(newItem);
     });
   }
 }
