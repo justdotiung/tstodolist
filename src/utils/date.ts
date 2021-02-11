@@ -1,21 +1,21 @@
-type WeekData = {
+export type WeekData = {
   year: number;
   month: number;
   day: number;
   date: number;
 };
-type Week = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+type WeekNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export default class DateCal {
-  private static week: Array<WeekData> = DateCal.getSelectDays(new Date(Date.now()));
+export default class Week {
+  private static week: Array<WeekData> = Week.getSelectDays(new Date(Date.now()));
 
   /**
    * 선택한 날짜의 한주를 가져온다.
-   * @param { Date }fullyear fullyear
+   * @param { Date }fullDate fullDate
    */
-  static getSelectDays(fullyear: Date): Array<WeekData> {
+  static getSelectDays(fullDate: Date): Array<WeekData> {
     const array: Array<WeekData> = [];
-    const thisMonth = fullyear;
+    const thisMonth = fullDate;
     const day = thisMonth.getDay();
     const date = thisMonth.getDate();
     const year = thisMonth.getFullYear();
@@ -55,37 +55,35 @@ export default class DateCal {
 
   /**
    * 차주를 가져온다.
-   * @param {Week} day 해당 요일
+   * @param {WeekNumber} day 해당 요일
    */
-  static getNextWeek(day: Week = 0): Array<WeekData> {
-    const idx = day;
-    const checkDay = DateCal.week[idx];
+  static getNextWeek(): Array<WeekData> {
+    const checkDay = Week.week[0];
     const nextDate = new Date(checkDay.year, checkDay.month - 1, checkDay.date + 7);
-    const lastDay = new Date(checkDay.year, checkDay.month - 1, 0).getDate();
+    const lastDay = new Date(checkDay.year, checkDay.month, 0).getDate();
     if (checkDay.date + 7 > lastDay) {
-      DateCal.week = this.getSelectDays(new Date(checkDay.year, checkDay.month - 1, checkDay.date + 7 - lastDay));
+      Week.week = this.getSelectDays(new Date(checkDay.year, checkDay.month, checkDay.date + 7 - lastDay));
     } else {
-      DateCal.week = this.getSelectDays(nextDate);
+      Week.week = this.getSelectDays(nextDate);
     }
 
-    return DateCal.week;
+    return Week.week;
   }
 
   /**
    * 전주를 가져온다
-   * @param {Week} day 해당 요일
+   * @param {WeekNumber} day 해당 요일
    */
-  static getPrevWeek(day: Week = 0): Array<WeekData> {
-    const idx = day;
-    const checkDay = DateCal.week[idx];
+  static getPrevWeek(): Array<WeekData> {
+    const checkDay = Week.week[0];
     const prevDate = new Date(checkDay.year, checkDay.month - 1, checkDay.date - 7);
     if (checkDay.date - 7 < 1) {
       const lastDay = new Date(checkDay.year, checkDay.month - 1, 0).getDate();
-      DateCal.week = this.getSelectDays(new Date(checkDay.year, checkDay.month - 2, lastDay + checkDay.date - 7));
+      Week.week = this.getSelectDays(new Date(checkDay.year, checkDay.month - 2, lastDay + checkDay.date - 7));
     } else {
-      DateCal.week = this.getSelectDays(prevDate);
+      Week.week = this.getSelectDays(prevDate);
     }
-    return DateCal.week;
+    return Week.week;
   }
 
   /**
@@ -94,5 +92,17 @@ export default class DateCal {
    */
   static getCurrentWeek(): Array<WeekData> {
     return this.getSelectDays(new Date(Date.now()));
+  }
+
+  static getYear(): number {
+    return new Date(Date.now()).getFullYear();
+  }
+
+  static getMonth(): number {
+    return new Date(Date.now()).getMonth() + 1;
+  }
+
+  static getDate(): number {
+    return new Date(Date.now()).getDate();
   }
 }

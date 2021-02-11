@@ -6,28 +6,24 @@ import { Header } from './components/header/header.js';
 import { ListItem } from './components/header/headerItem.js';
 import { HeaderList } from './components/header/headerList.js';
 import { HeadPopup } from './components/popup/headPopup.js';
-import DateCal from './utils/date.js';
+import Weekly from './utils/date.js';
 
 class App {
   constructor(private target: HTMLElement) {
-    const headItems = new ListItem('');
-    const header = new Header(new HeaderList(headItems));
+    const items = Weekly.getCurrentWeek().map((obj) => new ListItem(obj));
+    const header = new Header(new HeaderList(items));
     const content = new Content();
     const footer = new Footer();
+    items.forEach((item) =>
+      item.setClickHandler((e: Event) => {
+        console.log(item.data);
+      })
+    );
+    header.attachTo(this.target);
+    // content.attachTo(target);
+    // footer.attachTo(target);
 
-    console.log(DateCal.getCurrentWeek());
-    console.log(DateCal.getNextWeek());
-    console.log(DateCal.getNextWeek());
-    console.log(DateCal.getPrevWeek());
-    console.log(DateCal.getSelectDays(new Date(2022, 1, 20)));
-    // console.log(dateCal.week);
-    // dateCal.currentWeek();
-    // console.log(dateCal.week);
-
-    header.attachTo(target);
-    content.attachTo(target);
-    footer.attachTo(target);
-
+    /*
     const bodyList = new ContentList(headItems.title);
     const popup = new HeadPopup();
     headItems.setClickHandler(() => {
@@ -44,6 +40,7 @@ class App {
       const newItem = new ContentItem(popup.value);
       bodyList.addChild(newItem);
     });
+    */
   }
 }
 

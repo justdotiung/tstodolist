@@ -1,13 +1,13 @@
-var DateCal = /** @class */ (function () {
-    function DateCal() {
+var Week = /** @class */ (function () {
+    function Week() {
     }
     /**
      * 선택한 날짜의 한주를 가져온다.
-     * @param { Date }fullyear fullyear
+     * @param { Date }fullDate fullDate
      */
-    DateCal.getSelectDays = function (fullyear) {
+    Week.getSelectDays = function (fullDate) {
         var array = [];
-        var thisMonth = fullyear;
+        var thisMonth = fullDate;
         var day = thisMonth.getDay();
         var date = thisMonth.getDate();
         var year = thisMonth.getFullYear();
@@ -48,48 +48,53 @@ var DateCal = /** @class */ (function () {
     };
     /**
      * 차주를 가져온다.
-     * @param {Week} day 해당 요일
+     * @param {WeekNumber} day 해당 요일
      */
-    DateCal.getNextWeek = function (day) {
-        if (day === void 0) { day = 0; }
-        var idx = day;
-        var checkDay = DateCal.week[idx];
+    Week.getNextWeek = function () {
+        var checkDay = Week.week[0];
         var nextDate = new Date(checkDay.year, checkDay.month - 1, checkDay.date + 7);
-        var lastDay = new Date(checkDay.year, checkDay.month - 1, 0).getDate();
+        var lastDay = new Date(checkDay.year, checkDay.month, 0).getDate();
         if (checkDay.date + 7 > lastDay) {
-            DateCal.week = this.getSelectDays(new Date(checkDay.year, checkDay.month - 1, checkDay.date + 7 - lastDay));
+            Week.week = this.getSelectDays(new Date(checkDay.year, checkDay.month, checkDay.date + 7 - lastDay));
         }
         else {
-            DateCal.week = this.getSelectDays(nextDate);
+            Week.week = this.getSelectDays(nextDate);
         }
-        return DateCal.week;
+        return Week.week;
     };
     /**
      * 전주를 가져온다
-     * @param {Week} day 해당 요일
+     * @param {WeekNumber} day 해당 요일
      */
-    DateCal.getPrevWeek = function (day) {
-        if (day === void 0) { day = 0; }
-        var idx = day;
-        var checkDay = DateCal.week[idx];
+    Week.getPrevWeek = function () {
+        var checkDay = Week.week[0];
         var prevDate = new Date(checkDay.year, checkDay.month - 1, checkDay.date - 7);
         if (checkDay.date - 7 < 1) {
             var lastDay = new Date(checkDay.year, checkDay.month - 1, 0).getDate();
-            DateCal.week = this.getSelectDays(new Date(checkDay.year, checkDay.month - 2, lastDay + checkDay.date - 7));
+            Week.week = this.getSelectDays(new Date(checkDay.year, checkDay.month - 2, lastDay + checkDay.date - 7));
         }
         else {
-            DateCal.week = this.getSelectDays(prevDate);
+            Week.week = this.getSelectDays(prevDate);
         }
-        return DateCal.week;
+        return Week.week;
     };
     /**
      * 금주를 가져온다.
      * @param fullyear new Date() use
      */
-    DateCal.getCurrentWeek = function () {
+    Week.getCurrentWeek = function () {
         return this.getSelectDays(new Date(Date.now()));
     };
-    DateCal.week = DateCal.getSelectDays(new Date(Date.now()));
-    return DateCal;
+    Week.getYear = function () {
+        return new Date(Date.now()).getFullYear();
+    };
+    Week.getMonth = function () {
+        return new Date(Date.now()).getMonth() + 1;
+    };
+    Week.getDate = function () {
+        return new Date(Date.now()).getDate();
+    };
+    Week.week = Week.getSelectDays(new Date(Date.now()));
+    return Week;
 }());
-export default DateCal;
+export default Week;
