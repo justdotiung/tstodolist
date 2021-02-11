@@ -6,13 +6,23 @@ import { Header } from './components/header/header.js';
 import { ListItem } from './components/header/headerItem.js';
 import { HeaderList } from './components/header/headerList.js';
 import { HeadPopup } from './components/popup/headPopup.js';
+import DateCal from './utils/date.js';
 
 class App {
   constructor(private target: HTMLElement) {
-    const headItems = new ListItem('today');
+    const headItems = new ListItem('');
     const header = new Header(new HeaderList(headItems));
     const content = new Content();
     const footer = new Footer();
+
+    console.log(DateCal.getCurrentWeek());
+    console.log(DateCal.getNextWeek());
+    console.log(DateCal.getNextWeek());
+    console.log(DateCal.getPrevWeek());
+    console.log(DateCal.getSelectDays(new Date(2022, 1, 20)));
+    // console.log(dateCal.week);
+    // dateCal.currentWeek();
+    // console.log(dateCal.week);
 
     header.attachTo(target);
     content.attachTo(target);

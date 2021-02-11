@@ -14,11 +14,11 @@ var __extends = (this && this.__extends) || (function () {
 import { BaseComponent } from '../../pageComponent.js';
 var ListItem = /** @class */ (function (_super) {
     __extends(ListItem, _super);
-    function ListItem(text) {
-        var _this = _super.call(this, "<li class=\"header__list__item\"><button></button></li>") || this;
-        _this.text = text;
+    function ListItem(_text) {
+        var _this = _super.call(this, "<li class=\"header__list__item\"><button><p>\uC6D4</p></button></li>") || this;
+        _this._text = _text;
         var button = _this.element.querySelector('button');
-        button.textContent = text;
+        // button.textContent = _text;
         button.onclick = function (e) {
             _this.onClick && _this.onClick(e);
         };
@@ -29,7 +29,10 @@ var ListItem = /** @class */ (function (_super) {
     };
     Object.defineProperty(ListItem.prototype, "title", {
         get: function () {
-            return this.text;
+            return this._text;
+        },
+        set: function (text) {
+            this._text = text;
         },
         enumerable: false,
         configurable: true

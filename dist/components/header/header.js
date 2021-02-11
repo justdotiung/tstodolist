@@ -15,7 +15,7 @@ import { BaseComponent } from '../../pageComponent.js';
 var Header = /** @class */ (function (_super) {
     __extends(Header, _super);
     function Header(list) {
-        var _this = _super.call(this, "<header>\n\t\t\t\t\t\t<h1 class=\"header__title\">Todo List</h1>\n\t\t\t\t</header>") || this;
+        var _this = _super.call(this, "<header>\n\t\t\t\t\t\t<h1 class=\"header__title\">Todo...</h1>\n\t\t\t\t</header>") || this;
         list && list.attachTo(_this.element);
         return _this;
     }

@@ -2,11 +2,11 @@ import { BaseComponent } from '../../pageComponent.js';
 
 export class ListItem extends BaseComponent {
   onClick: EventListener | undefined;
-  constructor(private text: string) {
-    super(`<li class="header__list__item"><button></button></li>`);
+  constructor(private _text: string) {
+    super(`<li class="header__list__item"><button><p>월</p></button></li>`);
 
     const button = this.element.querySelector('button') as HTMLButtonElement;
-    button.textContent = text;
+    // button.textContent = _text;
     button.onclick = (e: Event) => {
       this.onClick && this.onClick(e);
     };
@@ -17,9 +17,10 @@ export class ListItem extends BaseComponent {
   }
 
   get title(): string {
-    return this.text;
+    return this._text;
   }
-  // onClickHandler(e: Event): void {
-  //   this.onClick && this.onClick(e);
-  // }
+
+  set title(text: string) {
+    this._text = text;
+  }
 }
