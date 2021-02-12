@@ -54,12 +54,13 @@ var HeaderList = /** @class */ (function (_super) {
     };
     HeaderList.prototype.setOnDate = function (week) {
         var _this = this;
-        week.forEach(function (nextDay, i) {
-            _this.items[i].changeDate(nextDay.date);
-            _this.items[i].changeDay(nextDay.day);
-            _this.items[i].data = nextDay;
-            if (_this.items[i].click)
-                _this.changeYearAndMonth(nextDay);
+        week.forEach(function (data, i) {
+            _this.items[i].changeDate(data.date);
+            _this.items[i].changeDay(data.day);
+            _this.items[i].data = data;
+            if (_this.items[i].click) {
+                _this.changeYearAndMonth(data);
+            }
         });
     };
     HeaderList.prototype.onListClick = function (target, idx) {
@@ -77,7 +78,7 @@ var HeaderList = /** @class */ (function (_super) {
                 item.click = false;
             });
         }
-        this.items[idx].click = true;
+        this.items[this.idx].click = true;
     };
     HeaderList.prototype.changeYearAndMonth = function (day) {
         this._yearAndMonth.textContent = day.year.toString() + "." + day.month.toString();

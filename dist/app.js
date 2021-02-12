@@ -1,3 +1,5 @@
+import { ContentItem } from './components/content/contentItem.js';
+import { ContentList } from './components/content/contentList.js';
 import { Content } from './components/content/contnet.js';
 import { Footer } from './components/footer/footer.js';
 import { Header } from './components/header/header.js';
@@ -9,34 +11,20 @@ var App = /** @class */ (function () {
         this.target = target;
         var items = Weekly.getCurrentWeek().map(function (obj) { return new ListItem(obj); });
         var header = new Header(new HeaderList(items));
-        var content = new Content();
+        var content = new Content(new ContentList());
         var footer = new Footer();
         items.forEach(function (item) {
             return item.setClickHandler(function (e) {
-                console.log(item.data);
+                // console.log(item.data);
+                // content.getChildComponent().addChild(new ContentItem('temp'));
             });
         });
         header.attachTo(this.target);
-        // content.attachTo(target);
+        content.attachTo(target);
+        content.setOnClick(function () {
+            content.getChildComponent().addChild(new ContentItem('temp'));
+        });
         // footer.attachTo(target);
-        /*
-        const bodyList = new ContentList(headItems.title);
-        const popup = new HeadPopup();
-        headItems.setClickHandler(() => {
-          popup.value = '';
-          popup.attachTo(target);
-        });
-        popup.setOnClick(() => {
-          if (!popup.value) throw new Error('입력내용이없습니다.');
-    
-          if (!bodyList.ui) {
-            content.addChild(bodyList);
-            bodyList.ui = true;
-          }
-          const newItem = new ContentItem(popup.value);
-          bodyList.addChild(newItem);
-        });
-        */
     }
     return App;
 }());

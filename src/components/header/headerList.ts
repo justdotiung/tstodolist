@@ -61,12 +61,14 @@ export class HeaderList extends BaseComponent {
   }
 
   private setOnDate(week: Array<WeekData>): void {
-    week.forEach((nextDay, i) => {
-      this.items[i].changeDate(nextDay.date);
-      this.items[i].changeDay(nextDay.day);
-      this.items[i].data = nextDay;
+    week.forEach((data, i) => {
+      this.items[i].changeDate(data.date);
+      this.items[i].changeDay(data.day);
+      this.items[i].data = data;
 
-      if (this.items[i].click) this.changeYearAndMonth(nextDay);
+      if (this.items[i].click) {
+        this.changeYearAndMonth(data);
+      }
     });
   }
 
@@ -83,7 +85,7 @@ export class HeaderList extends BaseComponent {
         item.click = false;
       });
     }
-    this.items[idx].click = true;
+    this.items[this.idx].click = true;
   }
 
   private changeYearAndMonth(day: WeekData): void {

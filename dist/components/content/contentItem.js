@@ -15,7 +15,7 @@ import { BaseComponent } from './../../pageComponent.js';
 var ContentItem = /** @class */ (function (_super) {
     __extends(ContentItem, _super);
     function ContentItem(content) {
-        var _this = _super.call(this, "<div class=\"content__item\"><span></span></div>") || this;
+        var _this = _super.call(this, "<div class=\"content__item\">\n            <span></span>\n            <input type=\"checkbox\" >\n            <input type=\"text\">\n            <button>edit</button>\n            <button>remove</button>\n          </div>") || this;
         var span = _this.element.querySelector('span');
         span.textContent = content;
         return _this;

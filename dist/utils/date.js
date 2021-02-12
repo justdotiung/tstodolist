@@ -11,21 +11,29 @@ var Week = /** @class */ (function () {
         var day = thisMonth.getDay();
         var date = thisMonth.getDate();
         var year = thisMonth.getFullYear();
-        var firstDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1).getDate();
-        var lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0).getDate();
+        var firstDay = 1;
         var currentMonth = thisMonth.getMonth();
         var nowDate = thisMonth;
+        var memoCountDay = 0;
+        var memoPrevMonthLastDay = 0;
         if (day === 0) {
-            //sunday
+            var lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 0).getDate();
             for (var i = 1; i <= 7; i++) {
-                nowDate.setDate(date + i - 7);
-                array.push({ year: nowDate.getFullYear(), month: nowDate.getMonth() + 1, day: nowDate.getDay(), date: nowDate.getDate() });
+                var setDay = date + i - 7;
+                if (setDay < firstDay) {
+                    nowDate = new Date(year, currentMonth - 1, lastDay + date + i - 7);
+                    array.push({ year: nowDate.getFullYear(), month: nowDate.getMonth() + 1, day: nowDate.getDay(), date: nowDate.getDate() });
+                }
+                else {
+                    nowDate = new Date(year, currentMonth, date + i - 7);
+                    array.push({ year: nowDate.getFullYear(), month: nowDate.getMonth() + 1, day: nowDate.getDay(), date: nowDate.getDate() });
+                    memoCountDay = nowDate.getDay() - 1;
+                }
             }
         }
         else {
+            var lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0).getDate();
             //other
-            var memoCountDay = 0;
-            var memoPrevMonthLastDay = 0;
             for (var i = 1; i <= 7; i++) {
                 var setDay = date + i - day;
                 if (setDay < firstDay) {

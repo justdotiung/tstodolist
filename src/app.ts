@@ -12,35 +12,21 @@ class App {
   constructor(private target: HTMLElement) {
     const items = Weekly.getCurrentWeek().map((obj) => new ListItem(obj));
     const header = new Header(new HeaderList(items));
-    const content = new Content();
+    const content = new Content(new ContentList());
     const footer = new Footer();
     items.forEach((item) =>
       item.setClickHandler((e: Event) => {
-        console.log(item.data);
+        // console.log(item.data);
+        // content.getChildComponent().addChild(new ContentItem('temp'));
       })
     );
     header.attachTo(this.target);
-    // content.attachTo(target);
+    content.attachTo(target);
+
+    content.setOnClick(() => {
+      content.getChildComponent().addChild(new ContentItem('temp'));
+    });
     // footer.attachTo(target);
-
-    /*
-    const bodyList = new ContentList(headItems.title);
-    const popup = new HeadPopup();
-    headItems.setClickHandler(() => {
-      popup.value = '';
-      popup.attachTo(target);
-    });
-    popup.setOnClick(() => {
-      if (!popup.value) throw new Error('입력내용이없습니다.');
-
-      if (!bodyList.ui) {
-        content.addChild(bodyList);
-        bodyList.ui = true;
-      }
-      const newItem = new ContentItem(popup.value);
-      bodyList.addChild(newItem);
-    });
-    */
   }
 }
 

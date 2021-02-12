@@ -19,21 +19,28 @@ export default class Week {
     const day = thisMonth.getDay();
     const date = thisMonth.getDate();
     const year = thisMonth.getFullYear();
-    const firstDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1).getDate();
-    const lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0).getDate();
+    const firstDay = 1;
     const currentMonth = thisMonth.getMonth();
 
     let nowDate = thisMonth;
+    let memoCountDay = 0;
+    let memoPrevMonthLastDay = 0;
     if (day === 0) {
-      //sunday
+      const lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 0).getDate();
       for (let i = 1; i <= 7; i++) {
-        nowDate.setDate(date + i - 7);
-        array.push({ year: nowDate.getFullYear(), month: nowDate.getMonth() + 1, day: nowDate.getDay(), date: nowDate.getDate() });
+        const setDay = date + i - 7;
+        if (setDay < firstDay) {
+          nowDate = new Date(year, currentMonth - 1, lastDay + date + i - 7);
+          array.push({ year: nowDate.getFullYear(), month: nowDate.getMonth() + 1, day: nowDate.getDay(), date: nowDate.getDate() });
+        } else {
+          nowDate = new Date(year, currentMonth, date + i - 7);
+          array.push({ year: nowDate.getFullYear(), month: nowDate.getMonth() + 1, day: nowDate.getDay(), date: nowDate.getDate() });
+          memoCountDay = nowDate.getDay() - 1;
+        }
       }
     } else {
+      const lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0).getDate();
       //other
-      let memoCountDay = 0;
-      let memoPrevMonthLastDay = 0;
       for (let i = 1; i <= 7; i++) {
         const setDay = date + i - day;
         if (setDay < firstDay) {
