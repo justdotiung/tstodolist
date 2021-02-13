@@ -86,6 +86,10 @@ export class HeaderList extends BaseComponent {
       });
     }
     this.items[this.idx].click = true;
+
+    if (this.idx === idx) {
+      this.items[this.idx].addHighlight();
+    }
   }
 
   private changeYearAndMonth(day: WeekData): void {

@@ -10,4 +10,11 @@ export class ContentList extends BaseComponent {
     const ul = this.element.querySelector('.content__box__div') as HTMLUListElement;
     child.attachTo(ul);
   }
+
+  removeAllChildNode(): void {
+    const ul = this.element.querySelector('.content__box__div') as HTMLUListElement;
+    while (ul.firstChild) {
+      ul.removeChild(ul.firstChild);
+    }
+  }
 }

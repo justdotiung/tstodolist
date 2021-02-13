@@ -1,3 +1,4 @@
+import * as api from './components/api/fooAPI.js';
 import { ContentItem } from './components/content/contentItem.js';
 import { ContentList } from './components/content/contentList.js';
 import { Content } from './components/content/contnet.js';
@@ -6,6 +7,7 @@ import { Header } from './components/header/header.js';
 import { ListItem } from './components/header/headerItem.js';
 import { HeaderList } from './components/header/headerList.js';
 import { HeadPopup } from './components/popup/headPopup.js';
+import Week from './utils/date.js';
 import Weekly from './utils/date.js';
 
 class App {
@@ -15,16 +17,20 @@ class App {
     const content = new Content(new ContentList());
     const footer = new Footer();
     items.forEach((item) =>
-      item.setClickHandler((e: Event) => {
-        // console.log(item.data);
-        // content.getChildComponent().addChild(new ContentItem('temp'));
+      item.setClickHandler(() => {
+        content.setCalendarDate(item.data);
+        content.getChildComponent().removeAllChildNode();
+
+        const initDate = Week.getChangeDataFormat(item.data);
+        api.listByinitDate(initDate).forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
       })
     );
     header.attachTo(this.target);
     content.attachTo(target);
+    content.setCalendarDate(Week.getTodayData());
 
-    content.setOnClick(() => {
-      content.getChildComponent().addChild(new ContentItem('temp'));
+    content.setOnClick((data) => {
+      content.getChildComponent().addChild(new ContentItem(data));
     });
     // footer.attachTo(target);
   }

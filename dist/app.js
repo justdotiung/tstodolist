@@ -1,3 +1,4 @@
+import * as api from './components/api/fooAPI.js';
 import { ContentItem } from './components/content/contentItem.js';
 import { ContentList } from './components/content/contentList.js';
 import { Content } from './components/content/contnet.js';
@@ -5,27 +6,28 @@ import { Footer } from './components/footer/footer.js';
 import { Header } from './components/header/header.js';
 import { ListItem } from './components/header/headerItem.js';
 import { HeaderList } from './components/header/headerList.js';
+import Week from './utils/date.js';
 import Weekly from './utils/date.js';
-var App = /** @class */ (function () {
-    function App(target) {
+class App {
+    constructor(target) {
         this.target = target;
-        var items = Weekly.getCurrentWeek().map(function (obj) { return new ListItem(obj); });
-        var header = new Header(new HeaderList(items));
-        var content = new Content(new ContentList());
-        var footer = new Footer();
-        items.forEach(function (item) {
-            return item.setClickHandler(function (e) {
-                // console.log(item.data);
-                // content.getChildComponent().addChild(new ContentItem('temp'));
-            });
-        });
+        const items = Weekly.getCurrentWeek().map((obj) => new ListItem(obj));
+        const header = new Header(new HeaderList(items));
+        const content = new Content(new ContentList());
+        const footer = new Footer();
+        items.forEach((item) => item.setClickHandler(() => {
+            content.setCalendarDate(item.data);
+            content.getChildComponent().removeAllChildNode();
+            const initDate = Week.getChangeDataFormat(item.data);
+            api.listByinitDate(initDate).forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
+        }));
         header.attachTo(this.target);
         content.attachTo(target);
-        content.setOnClick(function () {
-            content.getChildComponent().addChild(new ContentItem('temp'));
+        content.setCalendarDate(Week.getTodayData());
+        content.setOnClick((data) => {
+            content.getChildComponent().addChild(new ContentItem(data));
         });
         // footer.attachTo(target);
     }
-    return App;
-}());
-var app = new App(document.querySelector('#app'));
+}
+const app = new App(document.querySelector('#app'));

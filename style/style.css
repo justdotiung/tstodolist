@@ -218,3 +218,7 @@ header {
 .popup__error.error {
   display: inline;
 }
+
+.content__item__input.deco {
+  text-decoration: line-through;
+}

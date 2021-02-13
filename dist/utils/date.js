@@ -1,25 +1,24 @@
-var Week = /** @class */ (function () {
-    function Week() {
-    }
+// type WeekNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export default class Week {
     /**
      * 선택한 날짜의 한주를 가져온다.
      * @param { Date }fullDate fullDate
      */
-    Week.getSelectDays = function (fullDate) {
-        var array = [];
-        var thisMonth = fullDate;
-        var day = thisMonth.getDay();
-        var date = thisMonth.getDate();
-        var year = thisMonth.getFullYear();
-        var firstDay = 1;
-        var currentMonth = thisMonth.getMonth();
-        var nowDate = thisMonth;
-        var memoCountDay = 0;
-        var memoPrevMonthLastDay = 0;
+    static getSelectDays(fullDate) {
+        const array = [];
+        const thisMonth = fullDate;
+        const day = thisMonth.getDay();
+        const date = thisMonth.getDate();
+        const year = thisMonth.getFullYear();
+        const firstDay = 1;
+        const currentMonth = thisMonth.getMonth();
+        let nowDate = thisMonth;
+        let memoCountDay = 0;
+        let memoPrevMonthLastDay = 0;
         if (day === 0) {
-            var lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 0).getDate();
-            for (var i = 1; i <= 7; i++) {
-                var setDay = date + i - 7;
+            const lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 0).getDate();
+            for (let i = 1; i <= 7; i++) {
+                const setDay = date + i - 7;
                 if (setDay < firstDay) {
                     nowDate = new Date(year, currentMonth - 1, lastDay + date + i - 7);
                     array.push({ year: nowDate.getFullYear(), month: nowDate.getMonth() + 1, day: nowDate.getDay(), date: nowDate.getDate() });
@@ -32,10 +31,10 @@ var Week = /** @class */ (function () {
             }
         }
         else {
-            var lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0).getDate();
+            const lastDay = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0).getDate();
             //other
-            for (var i = 1; i <= 7; i++) {
-                var setDay = date + i - day;
+            for (let i = 1; i <= 7; i++) {
+                const setDay = date + i - day;
                 if (setDay < firstDay) {
                     memoPrevMonthLastDay = new Date(year, currentMonth, 0).getDate();
                     nowDate = new Date(nowDate.getFullYear(), currentMonth - 1, memoPrevMonthLastDay - day + i + 1);
@@ -53,15 +52,14 @@ var Week = /** @class */ (function () {
             }
         }
         return array;
-    };
+    }
     /**
      * 차주를 가져온다.
-     * @param {WeekNumber} day 해당 요일
      */
-    Week.getNextWeek = function () {
-        var checkDay = Week.week[0];
-        var nextDate = new Date(checkDay.year, checkDay.month - 1, checkDay.date + 7);
-        var lastDay = new Date(checkDay.year, checkDay.month, 0).getDate();
+    static getNextWeek() {
+        const checkDay = Week.week[0];
+        const nextDate = new Date(checkDay.year, checkDay.month - 1, checkDay.date + 7);
+        const lastDay = new Date(checkDay.year, checkDay.month, 0).getDate();
         if (checkDay.date + 7 > lastDay) {
             Week.week = this.getSelectDays(new Date(checkDay.year, checkDay.month, checkDay.date + 7 - lastDay));
         }
@@ -69,40 +67,55 @@ var Week = /** @class */ (function () {
             Week.week = this.getSelectDays(nextDate);
         }
         return Week.week;
-    };
+    }
     /**
      * 전주를 가져온다
-     * @param {WeekNumber} day 해당 요일
      */
-    Week.getPrevWeek = function () {
-        var checkDay = Week.week[0];
-        var prevDate = new Date(checkDay.year, checkDay.month - 1, checkDay.date - 7);
+    static getPrevWeek() {
+        const checkDay = Week.week[0];
+        const prevDate = new Date(checkDay.year, checkDay.month - 1, checkDay.date - 7);
         if (checkDay.date - 7 < 1) {
-            var lastDay = new Date(checkDay.year, checkDay.month - 1, 0).getDate();
+            const lastDay = new Date(checkDay.year, checkDay.month - 1, 0).getDate();
             Week.week = this.getSelectDays(new Date(checkDay.year, checkDay.month - 2, lastDay + checkDay.date - 7));
         }
         else {
             Week.week = this.getSelectDays(prevDate);
         }
         return Week.week;
-    };
+    }
     /**
      * 금주를 가져온다.
      * @param fullyear new Date() use
      */
-    Week.getCurrentWeek = function () {
+    static getCurrentWeek() {
         return this.getSelectDays(new Date(Date.now()));
-    };
-    Week.getYear = function () {
+    }
+    static getChangeDataFormat(data) {
+        const year = data.year;
+        const month = data.month;
+        const date = data.date;
+        const m = month < 10 ? `0${month}` : `${month}`;
+        const d = date < 10 ? `0${date}` : `${date}`;
+        return `${year}-${m}-${d}`;
+    }
+    static getYear() {
         return new Date(Date.now()).getFullYear();
-    };
-    Week.getMonth = function () {
+    }
+    static getMonth() {
         return new Date(Date.now()).getMonth() + 1;
-    };
-    Week.getDate = function () {
+    }
+    static getDate() {
         return new Date(Date.now()).getDate();
-    };
-    Week.week = Week.getSelectDays(new Date(Date.now()));
-    return Week;
-}());
-export default Week;
+    }
+    static getTodayData() {
+        return this.week.find((data) => data.date === Week.getDate());
+    }
+    static getRemainingDays(start, end) {
+        const [startYear, startMonth, startDay] = start.split('-').map((str) => Number(str));
+        const [endYear, endMonth, endDay] = end.split('-').map((str) => Number(str));
+        const startTime = new Date(startYear, startMonth - 1, startDay).getTime();
+        const endTime = new Date(endYear, endMonth - 1, endDay).getTime();
+        return (endTime - startTime) / 1000 / 60 / 60 / 24;
+    }
+}
+Week.week = Week.getSelectDays(new Date(Date.now()));

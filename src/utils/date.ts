@@ -4,7 +4,7 @@ export type WeekData = {
   day: number;
   date: number;
 };
-type WeekNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+// type WeekNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export default class Week {
   private static week: Array<WeekData> = Week.getSelectDays(new Date(Date.now()));
@@ -62,7 +62,6 @@ export default class Week {
 
   /**
    * 차주를 가져온다.
-   * @param {WeekNumber} day 해당 요일
    */
   static getNextWeek(): Array<WeekData> {
     const checkDay = Week.week[0];
@@ -79,7 +78,6 @@ export default class Week {
 
   /**
    * 전주를 가져온다
-   * @param {WeekNumber} day 해당 요일
    */
   static getPrevWeek(): Array<WeekData> {
     const checkDay = Week.week[0];
@@ -101,6 +99,15 @@ export default class Week {
     return this.getSelectDays(new Date(Date.now()));
   }
 
+  static getChangeDataFormat(data: WeekData): string {
+    const year = data.year;
+    const month = data.month;
+    const date = data.date;
+    const m = month < 10 ? `0${month}` : `${month}`;
+    const d = date < 10 ? `0${date}` : `${date}`;
+    return `${year}-${m}-${d}`;
+  }
+
   static getYear(): number {
     return new Date(Date.now()).getFullYear();
   }
@@ -111,5 +118,19 @@ export default class Week {
 
   static getDate(): number {
     return new Date(Date.now()).getDate();
+  }
+
+  static getTodayData(): WeekData {
+    return this.week.find((data) => data.date === Week.getDate()) as WeekData;
+  }
+
+  static getRemainingDays(start: string, end: string): number {
+    const [startYear, startMonth, startDay] = start.split('-').map((str) => Number(str));
+    const [endYear, endMonth, endDay] = end.split('-').map((str) => Number(str));
+
+    const startTime = new Date(startYear, startMonth - 1, startDay).getTime();
+    const endTime = new Date(endYear, endMonth - 1, endDay).getTime();
+
+    return (endTime - startTime) / 1000 / 60 / 60 / 24;
   }
 }

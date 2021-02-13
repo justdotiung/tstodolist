@@ -1,36 +1,31 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 import { BaseComponent } from '../../pageComponent.js';
-var HeadPopup = /** @class */ (function (_super) {
-    __extends(HeadPopup, _super);
-    function HeadPopup() {
-        var _this = _super.call(this, "<div class=\"head__popup\">\n            <div>\n              <div class=\"head__popup__content\">\n              <input class=\"head__popup__input\" type=\"text\" placeholder=\"write some todo...\"  >\n              <button class=\"head__popup__add\">+</button>\n              <button class=\"head__popup__close\">x</button>\n              </div>\n              <span class=\"popup__error\"></span>\n            </div>\n          </div>") || this;
-        var addBtn = _this.element.querySelector('.head__popup__add');
-        var errorSpan = _this.element.querySelector('.popup__error');
-        _this.input = _this.element.querySelector('.head__popup__input');
-        _this.input.onfocus = function () {
+export class HeadPopup extends BaseComponent {
+    constructor() {
+        super(`<div class="head__popup">
+            <div>
+              <div class="head__popup__content">
+              <input class="head__popup__input" type="text" placeholder="write some todo..."  >
+              <button class="head__popup__add">+</button>
+              <button class="head__popup__close">x</button>
+              </div>
+              <span class="popup__error"></span>
+            </div>
+          </div>`);
+        const addBtn = this.element.querySelector('.head__popup__add');
+        const errorSpan = this.element.querySelector('.popup__error');
+        this.input = this.element.querySelector('.head__popup__input');
+        this.input.onfocus = () => {
             errorSpan.classList.remove('error');
-            _this.input.placeholder = '';
+            this.input.placeholder = '';
         };
-        _this.input.onblur = function () {
-            _this.input.placeholder = 'write some todo...';
+        this.input.onblur = () => {
+            this.input.placeholder = 'write some todo...';
         };
-        addBtn.onclick = function () {
+        addBtn.onclick = () => {
             try {
-                _this.onClick && _this.onClick();
-                _this.removeFrom(_this.element.parentElement);
-                _this.input.value = '';
+                this.onClick && this.onClick();
+                this.removeFrom(this.element.parentElement);
+                this.input.value = '';
                 errorSpan.classList.remove('error');
             }
             catch (e) {
@@ -38,26 +33,19 @@ var HeadPopup = /** @class */ (function (_super) {
                 errorSpan.textContent = e.message;
             }
         };
-        var closeBtn = _this.element.querySelector('.head__popup__close');
-        closeBtn.onclick = function () {
-            _this.removeFrom(_this.element.parentElement);
+        const closeBtn = this.element.querySelector('.head__popup__close');
+        closeBtn.onclick = () => {
+            this.removeFrom(this.element.parentElement);
         };
-        return _this;
     }
-    Object.defineProperty(HeadPopup.prototype, "value", {
-        get: function () {
-            this.input.value;
-            return this.input.value;
-        },
-        set: function (text) {
-            this.input.value = text;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    HeadPopup.prototype.setOnClick = function (listener) {
+    get value() {
+        this.input.value;
+        return this.input.value;
+    }
+    set value(text) {
+        this.input.value = text;
+    }
+    setOnClick(listener) {
         this.onClick = listener;
-    };
-    return HeadPopup;
-}(BaseComponent));
-export { HeadPopup };
+    }
+}

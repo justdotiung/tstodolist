@@ -1,36 +1,45 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+import * as api from './../api/fooAPI.js';
 import { BaseComponent } from '../../pageComponent.js';
-var Content = /** @class */ (function (_super) {
-    __extends(Content, _super);
-    function Content(component) {
-        var _this = _super.call(this, "<section class=\"content__section\">\n              <div class=\"content\">\n                <div class=\"content__box__title\">\n                  <input type=\"text\" >\n                  <button>ADD</button>\n                </div>\n              </div>\n          </section>") || this;
-        _this.component = component;
-        component.attachTo(_this.element);
-        // this.content = this.element.querySelector('.content') as HTMLElement;
-        var button = _this.element.querySelector('button');
-        button.addEventListener('click', function () {
-            _this.onClick && _this.onClick();
+import Week from '../../utils/date.js';
+export class Content extends BaseComponent {
+    constructor(component) {
+        super(`<section class="content__section">
+              <div class="content">
+                <div class="content__box__title">
+                  <input type="text" class="content__text" placeholder="something..." >
+                  <label for="end">End date:</label>
+                  <input type="date" id="end" name="trip-start" >
+                  <button>ADD</button>
+                </div>
+              </div>
+          </section>`);
+        this.component = component;
+        component.attachTo(this.element);
+        const button = this.element.querySelector('button');
+        button.addEventListener('click', () => {
+            this.onAdd();
         });
-        return _this;
     }
-    Content.prototype.getChildComponent = function () {
+    getChildComponent() {
         return this.component;
-    };
-    Content.prototype.setOnClick = function (listener) {
+    }
+    setOnClick(listener) {
         this.onClick = listener;
-    };
-    return Content;
-}(BaseComponent));
-export { Content };
+    }
+    onAdd() {
+        const text = this.element.querySelector('.content__text');
+        const date = this.element.querySelector('#end');
+        const initDate = Week.getChangeDataFormat(this._date);
+        const data = { initDate, text: text.value, endDate: date.value };
+        const id = api.post(data);
+        this.onClick && this.onClick(api.getDataById(id));
+        text.value = '';
+        date.value = initDate;
+    }
+    setCalendarDate(data) {
+        const date = this.element.querySelector('#end');
+        date.value = Week.getChangeDataFormat(data);
+        date.min = Week.getChangeDataFormat(data);
+        this._date = data;
+    }
+}
