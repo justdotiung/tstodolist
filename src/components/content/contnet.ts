@@ -14,11 +14,11 @@ export class Content<T extends BaseComponent> extends BaseComponent {
                   <div class="body_record__div__div">
                     <input type="text" class="body_record__div__input" placeholder="add Todo..." >
                     <div class="body_record__div--calender">
-                      <label class="body_record__div__label" for="end">End date</label>
+                      <label class="body_record__div__label" for="end"><i class="fas fa-calendar-week fa-2x"></i><i class="fas fa-calendar-week small"></i></label>
                       <input type="date" id="end" class="body_record__div__input--date" >
                     </div>
                   </div>
-                  <button class="body_record__div__button"><i class="fas fa-cart-plus fa-2x"></i></button>
+                  <button class="body_record__div__button"><i class="fas fa-cart-plus fa-2x"></i><i class="fas fa-cart-plus small"></i></button>
                 </div>
               </div>
           </section>`);

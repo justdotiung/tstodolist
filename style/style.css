@@ -13,6 +13,25 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--header--background--color);
+} /* 스크롤 바 밑의 배경 */
+::-webkit-scrollbar-thumb {
+  background: var(--content--text--placeholder);
+} /* 실질적 스크롤 바 */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--content--text--placeholder);
+} /* 실질적 스크롤 바 위에 마우스를 올려다 둘 때 */
+::-webkit-scrollbar-thumb:active {
+  background: var(--content--text--placeholder);
+} /* 실질적 스크롤 바를 클릭할 때 */
+::-webkit-scrollbar-button {
+  /* display: none; */
+} /* 스크롤 바 상 하단 버튼 */
+
 body {
   margin: 0;
   padding: 0;
@@ -27,7 +46,7 @@ body {
 }
 /* ============= header ================= */
 .logo {
-  font-size: 3rem;
+  font-size: 7rem;
   color: var(--header--color);
   font-weight: 800;
 }
@@ -92,8 +111,16 @@ header {
 .header__date--list {
   display: flex;
   list-style: none;
-  padding: 1rem;
+  padding: 0.6rem;
   margin: 0;
+}
+
+.header__list__item__date {
+  font-size: 1.5rem;
+}
+
+.header__list__item__day {
+  font-size: 0.7rem;
 }
 
 .header__date--item {
@@ -111,6 +138,7 @@ header {
   border-radius: 50px;
   padding: 1rem 0.5rem;
   color: var(--header--text);
+  width: 5rem;
 }
 
 .header__date--item--button:hover {
@@ -133,7 +161,12 @@ header {
 
 .body__content {
   margin: auto;
-  width: 90%;
+  /* width: 90%; */
+  max-width: 800px;
+  margin-bottom: 3rem;
+}
+.body_content__div {
+  max-width: 800px;
 }
 .body_record__div {
   display: flex;
@@ -181,21 +214,43 @@ header {
   color: var(--header--color);
 }
 
+.body_record__div--calender {
+  position: relative;
+  float: left;
+  margin-top: 0.2rem;
+}
+
 .body_record__div__label {
   text-align: center;
-  color: var(--header--color);
+  color: var(--content--text--placeholder);
   font-size: 1.2rem;
+  display: block;
+  width: 100%;
 }
+
 .body_record__div__input--date {
   outline: none;
   border: none;
   background-color: var(--header--background--inner--color);
   color: var(--content--text--placeholder);
-  width: 47px;
+  display: block;
 }
-.body_record__div__input--date::-webkit-calendar-picker-indicator {
-  color: var(--header--color);
-  background-color: var(--content--text--placeholder);
+
+.body_record__div__input--date {
+  margin-top: -1em;
+  opacity: 0;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
 }
 
 .body_content__div {
@@ -205,24 +260,6 @@ header {
   overflow-y: scroll;
   overflow: auto;
 }
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background-color: var(--header--background--color);
-} /* 스크롤 바 밑의 배경 */
-::-webkit-scrollbar-thumb {
-  background: var(--content--text--placeholder);
-} /* 실질적 스크롤 바 */
-::-webkit-scrollbar-thumb:hover {
-  background: var(--content--text--placeholder);
-} /* 실질적 스크롤 바 위에 마우스를 올려다 둘 때 */
-::-webkit-scrollbar-thumb:active {
-  background: var(--content--text--placeholder);
-} /* 실질적 스크롤 바를 클릭할 때 */
-::-webkit-scrollbar-button {
-  /* display: none; */
-} /* 스크롤 바 상 하단 버튼 */
 
 .body_content__ul {
   padding: 0;
@@ -252,9 +289,11 @@ header {
   outline: none;
   border: none;
   background-color: var(--header--background--color);
-  font-size: 2rem;
+  font-size: 1.7rem;
   padding: 0.4rem;
   margin-right: 0.5rem;
+  padding-left: 1rem;
+  border-radius: 10px;
 }
 
 .body_content__li__button--edit,
@@ -293,6 +332,12 @@ header {
 .fa-edit {
   color: var(--content--text--placeholder);
 }
+.fas.fa-cart-plus.small,
+.fas.fa-calendar-week.small,
+.fas.fa-trash-alt.small,
+.far.fa-edit.small {
+  display: none;
+}
 
 /*=================footer============================*/
 footer {
@@ -309,4 +354,85 @@ footer {
 }
 .popup__error.error {
   display: inline;
+}
+
+@media screen and (max-width: 750px) {
+  .header__div {
+    width: 100%;
+  }
+  .header__content--year {
+    margin: 0;
+  }
+  .header__date--list {
+    width: 100%;
+    flex-direction: column;
+    padding: 0.1rem;
+  }
+  .header__date--item--button {
+    width: 100%;
+  }
+  .header__date--item {
+    margin: 0.2rem;
+  }
+  .header__date--item--button:hover {
+    transform: scale(1);
+    transition: none;
+  }
+  .header__date--item--button {
+    padding: 0;
+    flex-direction: row;
+  }
+  .header__list__item__date {
+    margin-right: 0.2rem;
+    font-size: 0.9rem;
+  }
+  .body_record__div {
+    width: 80%;
+    margin: auto;
+  }
+  .body_record__div--calender {
+    margin-top: 0.4rem;
+  }
+  .body_content__li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .body_content__li__input {
+    font-size: 1rem;
+    width: 100%;
+  }
+  .body_content__li__span {
+    width: 100%;
+    padding-bottom: 0.5rem;
+    font-size: 1.4rem;
+  }
+  .body_content__checkbox {
+    left: 0.4rem;
+    margin-top: 0.7rem;
+    position: absolute;
+  }
+  .body_content__li__button--edit {
+    position: absolute;
+    right: 4rem;
+    width: 7%;
+  }
+  .body_content__li__button--remove {
+    position: absolute;
+    width: 7%;
+    right: 0.5rem;
+  }
+  .far.fa-edit.fa-2x,
+  .fas.fa-cart-plus.fa-2x,
+  .fas.fa-calendar-week.fa-2x,
+  .fas.fa-trash-alt.fa-2x {
+    display: none;
+  }
+
+  .fas.fa-cart-plus.small,
+  .fas.fa-calendar-week.small,
+  .fas.fa-trash-alt.small,
+  .far.fa-edit.small {
+    display: block;
+  }
 }

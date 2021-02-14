@@ -11,7 +11,7 @@ export class HeaderList extends BaseComponent {
   private idx = -1;
 
   constructor(private items: Array<ListItem>) {
-    super(`<div>
+    super(`<div class="header__div">
             <h1 class="header__content--year"></h1>
             <div class="header__date">
               <button class="header__date--prev"> < </button>

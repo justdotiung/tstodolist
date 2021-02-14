@@ -7,8 +7,8 @@ export class ContentItem extends BaseComponent {
             <input type="checkbox" class="body_content__checkbox">
             <span class="body_content__li__span"></span>
             <input type="text" class="body_content__li__input">
-            <button class="body_content__li__button--edit"><i class="far fa-edit fa-2x"></i></button>
-            <button class="body_content__li__button--remove"><i class="fas fa-trash-alt fa-2x"></i></button>
+            <button class="body_content__li__button--edit"><i class="far fa-edit fa-2x"></i><i class="far fa-edit small"></i></button>
+            <button class="body_content__li__button--remove"><i class="fas fa-trash-alt fa-2x"></i><i class="fas fa-trash-alt small"></i></button>
           </li>`);
 
     const input = this.element.querySelector('.body_content__li__input') as HTMLInputElement;

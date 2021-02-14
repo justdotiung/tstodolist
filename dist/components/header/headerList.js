@@ -2,7 +2,7 @@ import { BaseComponent } from '../../pageComponent.js';
 import Week from '../../utils/date.js';
 export class HeaderList extends BaseComponent {
     constructor(items) {
-        super(`<div>
+        super(`<div class="header__div">
             <h1 class="header__content--year"></h1>
             <div class="header__date">
               <button class="header__date--prev"> < </button>
