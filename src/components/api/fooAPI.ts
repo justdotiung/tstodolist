@@ -14,27 +14,35 @@ export type DBTodoData = {
   checked: boolean;
 };
 
-export const post = (data: TodoData): number => {
-  const lastIdx = todoData.length > 0 ? todoData.length - 1 : 0;
-  const id = todoData[lastIdx] ? todoData[lastIdx].id + 1 : 0;
-  todoData.push({ ...data, id, checked: false });
-  return id;
+export const post = (data: TodoData): Promise<number> => {
+  return new Promise((_resolve) => {
+    const lastIdx = todoData.length > 0 ? todoData.length - 1 : 0;
+    const id = todoData[lastIdx] ? todoData[lastIdx].id + 1 : 0;
+    todoData.push({ ...data, id, checked: false });
+    _resolve(id);
+  });
 };
 
-export const all = (): Array<TodoData> => {
-  return todoData;
+export const all = (): Promise<Array<TodoData>> => {
+  return new Promise((resolve) => {
+    resolve(todoData);
+  });
 };
 
 export const edit = (edit: DBTodoData): void => {
   todoData = todoData.map((data) => (data.id === edit.id ? edit : data));
 };
 
-export const listByinitDate = (initDate: string): Array<DBTodoData> => {
-  return todoData.filter((obj) => obj.initDate === initDate);
+export const listByinitDate = (initDate: string): Promise<Array<DBTodoData>> => {
+  return new Promise((resolve) => {
+    resolve(todoData.filter((obj) => obj.initDate === initDate));
+  });
 };
 
-export const getDataById = (id: number): DBTodoData => {
-  return todoData.filter((obj) => obj.id === id)[0];
+export const getDataById = (id: number): Promise<DBTodoData> => {
+  return new Promise((resolve) => {
+    resolve(todoData.filter((obj) => obj.id === id)[0]);
+  });
 };
 
 export const deleteId = (id: number): void => {

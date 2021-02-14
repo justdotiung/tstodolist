@@ -16,15 +16,19 @@ class App {
     const header = new Header(new HeaderList(items));
     const content = new Content(new ContentList());
     const footer = new Footer();
+
     items.forEach((item) =>
-      item.setClickHandler(() => {
+      item.setClickHandler(async () => {
         content.setCalendarDate(item.data);
         content.getChildComponent().removeAllChildNode();
 
         const initDate = Week.getChangeDataFormat(item.data);
-        api.listByinitDate(initDate).forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
+        await api.listByinitDate(initDate).then((list) => {
+          list.forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
+        });
       })
     );
+
     header.attachTo(this.target);
     content.attachTo(target);
     content.setCalendarDate(Week.getTodayData());
@@ -32,7 +36,8 @@ class App {
     content.setOnClick((data) => {
       content.getChildComponent().addChild(new ContentItem(data));
     });
-    // footer.attachTo(target);
+
+    footer.attachTo(target);
   }
 }
 

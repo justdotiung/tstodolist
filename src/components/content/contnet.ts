@@ -8,13 +8,17 @@ export class Content<T extends BaseComponent> extends BaseComponent {
   private onClick: OnClick | undefined;
   private _date: WeekData | undefined;
   constructor(private component: T) {
-    super(`<section class="content__section">
-              <div class="content">
-                <div class="content__box__title">
-                  <input type="text" class="content__text" placeholder="something..." >
-                  <label for="end">End date:</label>
-                  <input type="date" id="end" name="trip-start" >
-                  <button>ADD</button>
+    super(`<section class="body__section">
+              <div class="body__content">
+                <div class="body_record__div">
+                  <div class="body_record__div__div">
+                    <input type="text" class="body_record__div__input" placeholder="add Todo..." >
+                    <div class="body_record__div--calender">
+                      <label class="body_record__div__label" for="end">End date</label>
+                      <input type="date" id="end" class="body_record__div__input--date" >
+                    </div>
+                  </div>
+                  <button class="body_record__div__button"><i class="fas fa-cart-plus fa-2x"></i></button>
                 </div>
               </div>
           </section>`);
@@ -24,6 +28,12 @@ export class Content<T extends BaseComponent> extends BaseComponent {
     button.addEventListener('click', () => {
       this.onAdd();
     });
+    const text = this.element.querySelector('.body_record__div__input') as HTMLInputElement;
+    text.onfocus = () => (text.placeholder = '');
+    text.onblur = () => (text.placeholder = 'add Todo...');
+    text.onkeypress = (e) => {
+      if (e.key === 'Enter') this.onAdd();
+    };
   }
 
   getChildComponent(): T {
@@ -34,13 +44,15 @@ export class Content<T extends BaseComponent> extends BaseComponent {
     this.onClick = listener;
   }
 
-  private onAdd() {
-    const text = this.element.querySelector('.content__text') as HTMLInputElement;
+  private async onAdd() {
+    const text = this.element.querySelector('.body_record__div__input') as HTMLInputElement;
     const date = this.element.querySelector('#end') as HTMLInputElement;
     const initDate = Week.getChangeDataFormat(this._date as WeekData);
     const data = { initDate, text: text.value, endDate: date.value };
-    const id = api.post(data);
-    this.onClick && this.onClick(api.getDataById(id));
+    const id = await api.post(data);
+    const successdata = await api.getDataById(id);
+
+    this.onClick && this.onClick(successdata);
 
     text.value = '';
     date.value = initDate;

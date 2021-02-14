@@ -8,8 +8,8 @@ export class ListItem extends BaseComponent {
   private _click = false;
 
   constructor(private _day: WeekData) {
-    super(`<li class="header__list__item">
-            <button>
+    super(`<li class="header__date--item">
+            <button class="header__date--item--button">
               <span class="header__list__item__date"></span>
               <span class="header__list__item__day"></span>
             </button>

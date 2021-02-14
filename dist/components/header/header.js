@@ -2,8 +2,10 @@ import { BaseComponent } from '../../pageComponent.js';
 export class Header extends BaseComponent {
     constructor(list) {
         super(`<header>
-						<h1 class="header__title">Todo...</h1>
+            <div class="header__content">
+						  <div class="logo">TODO</div>
+            </div>
 				</header>`);
-        list && list.attachTo(this.element);
+        list && list.attachTo(this.element.querySelector('.header__content'));
     }
 }

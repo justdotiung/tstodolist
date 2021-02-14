@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import * as api from './components/api/fooAPI.js';
 import { ContentItem } from './components/content/contentItem.js';
 import { ContentList } from './components/content/contentList.js';
@@ -15,19 +24,21 @@ class App {
         const header = new Header(new HeaderList(items));
         const content = new Content(new ContentList());
         const footer = new Footer();
-        items.forEach((item) => item.setClickHandler(() => {
+        items.forEach((item) => item.setClickHandler(() => __awaiter(this, void 0, void 0, function* () {
             content.setCalendarDate(item.data);
             content.getChildComponent().removeAllChildNode();
             const initDate = Week.getChangeDataFormat(item.data);
-            api.listByinitDate(initDate).forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
-        }));
+            yield api.listByinitDate(initDate).then((list) => {
+                list.forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
+            });
+        })));
         header.attachTo(this.target);
         content.attachTo(target);
         content.setCalendarDate(Week.getTodayData());
         content.setOnClick((data) => {
             content.getChildComponent().addChild(new ContentItem(data));
         });
-        // footer.attachTo(target);
+        footer.attachTo(target);
     }
 }
 const app = new App(document.querySelector('#app'));

@@ -12,15 +12,15 @@ export class HeaderList extends BaseComponent {
 
   constructor(private items: Array<ListItem>) {
     super(`<div>
-            <p class="header__year"></p>
-            <div class="header__diary">
-              <button class="diary__prev"> < </button>
-              <ul class="header__list"></ul>
-              <button class="diary__next"> > </button>
+            <h1 class="header__content--year"></h1>
+            <div class="header__date">
+              <button class="header__date--prev"> < </button>
+              <ul class="header__date--list"></ul>
+              <button class="header__date--next"> > </button>
             </div>
           </div>`);
 
-    const ul = this.element.querySelector('.header__list') as HTMLUListElement;
+    const ul = this.element.querySelector('.header__date--list') as HTMLUListElement;
     // let idx: number;
     this.items.forEach((item, i) => {
       if (item.data.date === Week.getDate()) {
@@ -35,11 +35,11 @@ export class HeaderList extends BaseComponent {
       this.onListClick(e.target as HTMLElement, this.idx);
     });
 
-    this._yearAndMonth = this.element.querySelector('.header__year') as HTMLParagraphElement;
+    this._yearAndMonth = this.element.querySelector('.header__content--year') as HTMLElement;
     this._yearAndMonth.textContent = `${Week.getYear().toString()}.${Week.getMonth().toString()}`;
 
-    const prevBtn = this.element.querySelector('.diary__prev') as HTMLButtonElement;
-    const nextBtn = this.element.querySelector('.diary__next') as HTMLButtonElement;
+    const prevBtn = this.element.querySelector('.header__date--prev') as HTMLButtonElement;
+    const nextBtn = this.element.querySelector('.header__date--next') as HTMLButtonElement;
 
     prevBtn.addEventListener('click', () => {
       this.setOnDate(Week.getPrevWeek());
