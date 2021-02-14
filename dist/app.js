@@ -21,7 +21,8 @@ class App {
     constructor(target) {
         this.target = target;
         const items = Weekly.getCurrentWeek().map((obj) => new ListItem(obj));
-        const header = new Header(new HeaderList(items));
+        const headerList = new HeaderList(items);
+        const header = new Header(headerList);
         const content = new Content(new ContentList());
         const footer = new Footer();
         items.forEach((item) => item.setClickHandler(() => __awaiter(this, void 0, void 0, function* () {
@@ -32,6 +33,30 @@ class App {
                 list.forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
             });
         })));
+        headerList.setOnNextListener(() => {
+            items.forEach((item) => __awaiter(this, void 0, void 0, function* () {
+                if (item.click) {
+                    content.setCalendarDate(item.data);
+                    content.getChildComponent().removeAllChildNode();
+                    const initDate = Week.getChangeDataFormat(item.data);
+                    yield api.listByinitDate(initDate).then((list) => {
+                        list.forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
+                    });
+                }
+            }));
+        });
+        headerList.setOnPrevListener(() => {
+            items.forEach((item) => __awaiter(this, void 0, void 0, function* () {
+                if (item.click) {
+                    content.setCalendarDate(item.data);
+                    content.getChildComponent().removeAllChildNode();
+                    const initDate = Week.getChangeDataFormat(item.data);
+                    yield api.listByinitDate(initDate).then((list) => {
+                        list.forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
+                    });
+                }
+            }));
+        });
         header.attachTo(this.target);
         content.attachTo(target);
         content.setCalendarDate(Week.getTodayData());

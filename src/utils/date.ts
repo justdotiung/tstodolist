@@ -8,7 +8,6 @@ export type WeekData = {
 
 export default class Week {
   private static week: Array<WeekData> = Week.getSelectDays(new Date(Date.now()));
-
   /**
    * 선택한 날짜의 한주를 가져온다.
    * @param { Date }fullDate fullDate

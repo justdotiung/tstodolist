@@ -13,7 +13,8 @@ import Weekly from './utils/date.js';
 class App {
   constructor(private target: HTMLElement) {
     const items = Weekly.getCurrentWeek().map((obj) => new ListItem(obj));
-    const header = new Header(new HeaderList(items));
+    const headerList = new HeaderList(items);
+    const header = new Header(headerList);
     const content = new Content(new ContentList());
     const footer = new Footer();
 
@@ -28,6 +29,32 @@ class App {
         });
       })
     );
+
+    headerList.setOnNextListener(() => {
+      items.forEach(async (item) => {
+        if (item.click) {
+          content.setCalendarDate(item.data);
+          content.getChildComponent().removeAllChildNode();
+          const initDate = Week.getChangeDataFormat(item.data);
+          await api.listByinitDate(initDate).then((list) => {
+            list.forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
+          });
+        }
+      });
+    });
+
+    headerList.setOnPrevListener(() => {
+      items.forEach(async (item) => {
+        if (item.click) {
+          content.setCalendarDate(item.data);
+          content.getChildComponent().removeAllChildNode();
+          const initDate = Week.getChangeDataFormat(item.data);
+          await api.listByinitDate(initDate).then((list) => {
+            list.forEach((obj) => content.getChildComponent().addChild(new ContentItem(obj)));
+          });
+        }
+      });
+    });
 
     header.attachTo(this.target);
     content.attachTo(target);

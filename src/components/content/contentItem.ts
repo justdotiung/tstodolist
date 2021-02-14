@@ -32,13 +32,12 @@ export class ContentItem extends BaseComponent {
     };
 
     checkbox.onclick = () => {
-      // checkbox.checked ? input.classList.toggle('deco') : input.classList.remove('deco');
       input.classList.toggle('deco');
     };
   }
 
   private countDay(): string {
-    const count = Week.getRemainingDays(Week.getChangeDataFormat(Week.getTodayData()), this.data.endDate);
+    const count = Week.getRemainingDays(this.data.initDate, this.data.endDate);
     if (count < 0) {
       return `pass`;
     } else if (count === 0) {

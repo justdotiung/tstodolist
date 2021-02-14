@@ -30,12 +30,11 @@ export class ContentItem extends BaseComponent {
             (_a = this.element.parentElement) === null || _a === void 0 ? void 0 : _a.removeChild(this.element);
         };
         checkbox.onclick = () => {
-            // checkbox.checked ? input.classList.toggle('deco') : input.classList.remove('deco');
             input.classList.toggle('deco');
         };
     }
     countDay() {
-        const count = Week.getRemainingDays(Week.getChangeDataFormat(Week.getTodayData()), this.data.endDate);
+        const count = Week.getRemainingDays(this.data.initDate, this.data.endDate);
         if (count < 0) {
             return `pass`;
         }
