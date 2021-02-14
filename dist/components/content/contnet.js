@@ -22,7 +22,7 @@ export class Content extends BaseComponent {
                       <input type="date" id="end" class="body_record__div__input--date" >
                     </div>
                   </div>
-                  <button class="body_record__div__button"><i class="fas fa-cart-plus fa-2x"></i><i class="fas fa-cart-plus small"></i></button>
+                  <button class="body_record__div__button"><i class="fas fa-plus fa-2x"></i><i class="fas fa-plus small"></i></button>
                 </div>
               </div>
           </section>`);
